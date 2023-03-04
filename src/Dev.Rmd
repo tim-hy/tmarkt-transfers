@@ -1,0 +1,33 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# load packages / local functions
+library(rvest)
+library(dplyr)
+library(purrr)
+library(janitor)
+library(readr)
+library(stringr)
+library(glue)
+```
+
+```{r}
+source("src/functions.R")
+
+# seasons to scrape
+seasons <- 1992:2021
+
+# get league metadata
+league_meta <- read_csv("config/league-meta.csv")
+
+# get data
+transfers <- map2(
+  league_meta$league_name, league_meta$league_id,
+  ~ map_dfr(seasons, get_transfers_history, 
+            league_name = .x, league_id = .y)
+  )
+```
+
