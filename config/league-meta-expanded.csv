@@ -1,5 +1,4 @@
 league_name,league_id,country
-juliper-pro-league,BE1,Belgium
 premier-league,GB1,England
 championship,GB2,England
 primera-division,ES1,Spain
@@ -9,3 +8,15 @@ ligue-1,FR1,France
 liga-nos,PO1,Portugal
 eredivisie,NL1,Netherlands
 premier-liga,RU1,Russia
+juliper-pro-league,BE1,Belgium
+campeonato-brasileiro-serie-a,BRA1,Brazil
+chinese-super-league,CSL,China
+j1-league,JAP1,Japan
+super-lig,TR1,Turkey
+liga-mx-apertura,MEXA,Mexico
+superliga,AR1N,Argentina
+k-league-1,RSK1,South Korea
+scottish-premiership,SC1,Scotland
+super-league,C1,Switzerland
+bundesliga,A1,Austria
+allsvenskan,SE1,Sweden
