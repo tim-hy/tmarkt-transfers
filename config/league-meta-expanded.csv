@@ -1,6 +1,5 @@
 league_name,league_id,country
 premier-league,GB1,England
-championship,GB2,England
 primera-division,ES1,Spain
 1-bundesliga,L1,Germany
 serie-a,IT1,Italy
@@ -20,3 +19,8 @@ scottish-premiership,SC1,Scotland
 super-league,C1,Switzerland
 bundesliga,A1,Austria
 allsvenskan,SE1,Sweden
+major-league-soccer,MLS1,United States of America
+saudi-professional-league,SA1,Saudi Arabia
+superligaen,DK1,Denmark
+liga-dimayor-i,COLP,Colombia
+eliteserien,NO1,Norway
