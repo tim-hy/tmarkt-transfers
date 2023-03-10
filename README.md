@@ -11,7 +11,7 @@ Data on European football clubs' player transfers, as found on [Transfermarkt](h
 
 Transfers can be found in the `data/` directory, in .csv format. Data is from the top 25 first-tier football leagues by revenue (https://en.wikipedia.org/wiki/List_of_professional_sports_leagues_by_revenue):
 
-| League  | Country(ies)  | Reve­nue (€ mil)  | Filename | Transfer year beginning |
+| League  | Country(ies)  | Reve­nue (€ mil)  | Filename | Transfer data year beginning |
 |:---:|:---:|:---:|:---:|:---:|
 | Premier League (EPL) |  England Wales | 6,100  | premier-league.csv | 1992
 | Campeonato Nacional de Liga de Primera División (La Liga) |  Spain | 3,400  | primera-division.csv | 1992
@@ -85,7 +85,8 @@ R:
 - `src/functions.R`: local R functions used elsewhere
 
 ## Roadmap
-- [] Enable Github Actions to automate Summer & Winter scrapes
+- [x] Refactor `club_involved_name` to use full team name (non-abbreviated)
+- [ ] Enable Github Actions to automate Summer & Winter scrapes
 
 ## Source
 
