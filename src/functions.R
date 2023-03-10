@@ -22,8 +22,18 @@ extract_transfers <- function(league_id, league_name, season_id, window) {
     league_id, league_name, season_id, window = window
   )
   cat("Scraping", transfers_url, "\n")
-  page <-  GET(transfers_url, config = httr::config(connecttimeout = 120)) %>% read_html
-  
+  # Error-catch page pull - iterate until completion
+  while(TRUE){
+    tryCatch({
+      page <-  GET(transfers_url, config = httr::config(connecttimeout = 120)) %>% read_html()
+      message("Extracted!\n")
+      break
+    }, error=function(e){
+      print(e)
+      message("Retrying...")
+    })
+  }
+
   # isolate leagues club names
   clubs <- page %>% 
     html_elements(".content-box-headline--logo") %>%
@@ -100,6 +110,29 @@ extract_transfers <- function(league_id, league_name, season_id, window) {
       !club_name %in% c("No departures", "No arrivals", "No new arrivals"),
       !player_name %in% c("No departures", "No arrivals", "No new arrivals")
       )
+
+  ## Get full (non-abbr.) team 'to' name and replace current abbr. version
+  # List team 'to' names
+  teamnames <- page %>% 
+    html_elements(".no-border-links, .verein-flagge-transfer-cell")
+  # create empty df
+  team_list <- data.frame(matrix(ncol=1,nrow=0))
+  colnames(team_list) <- "teamname"
+  # Iterate team names - get non-abbr. version, but if 
+  # non-existent (i.e. non-club transfer), get text from parent element
+  for (i in 1:length(teamnames)) {
+    name <- teamnames[i] %>% html_elements(., "a") %>% html_attr("title")
+    
+    if (length(name) < 1) {
+      x <- teamnames[i] %>% html_text() %>% str_trim()
+      team_list[i,] <- x
+    }
+    else {
+      x <- name
+      team_list[i, ] <- x
+    }
+  }
+  transfers_tidy["club_involved_name"] <- team_list
   
   # remove duplicate player name thing
   if (nrow(transfers_tidy) == 0) return(data.frame())
@@ -156,7 +189,7 @@ get_transfers_history <- function(league_id, league_name, season_id, country) {
   
   transfers_tidy <- tidy_transfers(transfers, league_name, season_id, country)
   
-  print("Sleeping...")
+  message("Sleeping...")
   Sys.sleep(5)
   return(transfers_tidy)
   
