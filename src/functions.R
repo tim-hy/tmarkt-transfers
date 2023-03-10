@@ -22,15 +22,23 @@ extract_transfers <- function(league_id, league_name, season_id, window) {
     league_id, league_name, season_id, window = window
   )
   cat("Scraping", transfers_url, "\n")
-  # Error-catch page pull - iterate until completion
+  
+  # tryCatch page scrape - Attempt maximum of 5 times, then break
+  i<-0
   while(TRUE){
     tryCatch({
+      i <- i+1
       page <-  GET(transfers_url, config = httr::config(connecttimeout = 120)) %>% read_html()
-      message("Extracted!\n")
+      message("Extracted.")
       break
     }, error=function(e){
-      print(e)
-      message("Retrying...")
+      if (i==5){
+        message("Scrape attempts limit reached - 5 attempts made to URL. Error message: ")
+        message(e)
+        stop()
+      }
+      message("Error retreiving URL. Retrying...")
+      Sys.sleep(2.5)
     })
   }
 
@@ -190,7 +198,7 @@ get_transfers_history <- function(league_id, league_name, season_id, country) {
   transfers_tidy <- tidy_transfers(transfers, league_name, season_id, country)
   
   message("Sleeping...")
-  Sys.sleep(5)
+  Sys.sleep(2.5)
   return(transfers_tidy)
   
 }
